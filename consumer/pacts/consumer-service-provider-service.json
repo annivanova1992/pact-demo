@@ -1,0 +1,78 @@
+{
+  "consumer": {
+    "name": "consumer-service"
+  },
+  "messages": [
+    {
+      "contents": {
+        "event": "UPDATED",
+        "id": "some-uuid-1234-5678",
+        "text": "Some Text",
+        "version": "v1"
+      },
+      "description": "a new message from provider",
+      "matchingRules": {
+        "body": {
+          "$.event": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "regex",
+                "regex": "^(CREATED|UPDATED|DELETED)$"
+              }
+            ]
+          },
+          "$.id": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "type"
+              }
+            ]
+          },
+          "$.text": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "type"
+              }
+            ]
+          },
+          "$.version": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "type"
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "content-type": "application/json",
+        "contentType": "application/json",
+        "kafka_topic": "messages"
+      },
+      "providerStates": [
+        {
+          "name": "provider created a new message"
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "pact-js": {
+      "version": "10.4.1"
+    },
+    "pactRust": {
+      "ffi": "0.4.0",
+      "models": "1.0.4"
+    },
+    "pactSpecification": {
+      "version": "3.0.0"
+    }
+  },
+  "provider": {
+    "name": "provider-service"
+  }
+}
